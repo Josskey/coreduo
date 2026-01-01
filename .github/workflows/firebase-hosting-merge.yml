@@ -3,14 +3,18 @@ on:
   push:
     branches:
       - main
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Disable sparse checkout
-        run: git sparse-checkout disable
+    steps:
+      - name: Checkout full repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          sparse-checkout: ''
+          sparse-checkout-cone-mode: false
 
       - name: Install dependencies
         working-directory: frontend
